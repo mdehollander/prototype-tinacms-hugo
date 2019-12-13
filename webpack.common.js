@@ -20,27 +20,34 @@ module.exports = {
         loader: "file-loader?name=/[hash].[ext]"
       },
 
-      {test: /\.json$/, loader: "json-loader"},
+      { test: /\.json$/, loader: "json-loader", exclude: /node_modules/ },
 
       {
         loader: "babel-loader",
         test: /\.js?$/,
         exclude: /node_modules/,
-        query: {cacheDirectory: true}
+        query: { cacheDirectory: true }
       },
 
       {
         test: /\.(sa|sc|c)ss$/,
         exclude: /node_modules/,
-        use: ["style-loader", MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"]
+        use: [
+          "style-loader",
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          "sass-loader"
+        ]
       }
     ]
   },
 
   plugins: [
-    new webpack.ProvidePlugin({
-      fetch: "imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch"
-    }),
+    // new webpack.ProvidePlugin({
+    //   fetch:
+    //     "imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch"
+    // }),
 
     new AssetsPlugin({
       filename: "webpack.json",

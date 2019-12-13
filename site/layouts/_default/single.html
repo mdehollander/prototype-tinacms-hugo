@@ -2,4 +2,24 @@
 <article class="content">
   <main>{{- .Content -}}</main>
 </article>
+<script>
+  setTimeout(() => {
+    tinacms.forms.add(
+      new TinaForm({
+        id: "test",
+        initialValues: {
+          fileRelativePath: "site/content/tech.md",
+          title: "test"
+        },
+        fields: [{ name: "title", component: "text" }],
+        onSubmit(formState) {
+          tinacms.api.git.onChange({
+            fileRelativePath: "site/content/tech.md",
+            content: '---\ntitle: "toot"\n---\n\n ## Sup World'
+          });
+        }
+      })
+    );
+  }, 1000);
+</script>
 {{ end }}
