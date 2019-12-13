@@ -3,23 +3,32 @@
   <main>{{- .Content -}}</main>
 </article>
 <script>
+  const fileRelativePath = "site/content/tech.md";
+  const title = "Hello Hugo";
+  const body = "## Hello Hugo\n\nThis is a static site built with Hugo.";
+
   setTimeout(() => {
     tinacms.forms.add(
       new TinaForm({
         id: "test",
         initialValues: {
-          fileRelativePath: "site/content/tech.md",
-          title: "test"
+          fileRelativePath,
+          title,
+          body
         },
-        fields: [{ name: "title", component: "text" }],
-        onSubmit(formState) {
+        fields: [
+          { name: "title", component: "text" },
+          { name: "body", component: "markdown" }
+        ],
+        onSubmit(form) {
           tinacms.api.git.onChange({
-            fileRelativePath: "site/content/tech.md",
-            content: '---\ntitle: "toot"\n---\n\n ## Sup World'
+            fileRelativePath: form.fileRelativePath,
+            content: '---\ntitle: "' + form.title + '"\n---\n\n' + form.body
           });
         }
       })
     );
   }, 1000);
 </script>
+
 {{ end }}
